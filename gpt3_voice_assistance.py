@@ -24,7 +24,7 @@ Define the main function that listens for user input and responds accordingly
 """
 
 def main():
-    engine.say("How may i help you right now?")
+    engine.say("This is luke, how may i help you right now?")
     engine.runAndWait()
  
     with sr.Microphone() as source:
@@ -55,6 +55,28 @@ def main():
         print(f"Could not request results from Google Speech Recognition service; {0}".format(request_error))
     
     if __name__ == '__main__':
-        while True:
-            main()
+        engine.say("Start by saying 'Hey Luke' or Stop the program by saying 'Bye Luke'")
+        engine.runAndWait()
         
+        while True:
+            with sr.Microphone() as source:
+                audio = r.listen(source)
+                
+            try:
+                command = r.recognize_google(audio)
+                if 'hey luke' in command:
+                    while True:
+                        main()
+                elif 'bye luke' in command:
+                    engine.say('GoodBye!')
+                    engine.runAndWait()
+                    break
+                else:
+                    engine.say("Sorry, I didn't understand that.")
+                    engine.runAndWait()
+            
+            except sr.UnknownValueError:
+                engine.say("Sorry, I didn't understand that.")
+                engine.runAndWait()
+            except sr.RequestError as request_error:
+                print(f"Could not request results from Google Speech Recognition service; {0}".format(request_error))
