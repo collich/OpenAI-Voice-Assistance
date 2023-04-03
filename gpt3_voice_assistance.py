@@ -8,10 +8,6 @@ import speech_recognition as sr
 import pyttsx3
 from dotenv import load_dotenv
 
-# load the env file
-load_dotenv()
-# Configure OpenAI API credentials
-openai.api_key = os.getenv('OPENAI_API_KEY')
 
 # Initialize speech recognition engine
 r = sr.Recognizer()
@@ -24,6 +20,11 @@ Define the main function that listens for user input and responds accordingly
 """
 
 def main():
+    # load the env file
+    load_dotenv()
+    # Configure OpenAI API credentials
+    openai.api_key = os.getenv('OPENAI_API_KEY')
+    
     engine.say("This is luke, how may i help you right now?")
     engine.runAndWait()
  
