@@ -8,6 +8,53 @@ import speech_recognition as sr
 import pyttsx3
 from dotenv import load_dotenv
 
+# load the env file
 load_dotenv()
-
+# Configure OpenAI API credentials
 openai.api_key = os.getenv('OPENAI_API_KEY')
+
+# Initialize speech recognition engine
+r = sr.Recognizer()
+
+# Initialize text-to-speech engine
+engine = pyttsx3.init()
+
+"""
+Define the main function that listens for user input and responds accordingly
+"""
+
+def main():
+    engine.say("How may i help you right now?")
+    engine.runAndWait()
+ 
+    with sr.Microphone() as source:
+        print('Listening...')
+        audio = r.listen(source)
+        
+    try:
+        query = r.recognize_google(audio)
+        print(f"You said {query}")
+        response = openai.Completion.create(
+            model= "gpt3-turbo",
+            prompt= query,
+            temperature=  0.5,
+            max_tokens= 60,
+            n=1,
+            stop=None,
+            timeout=5,
+        )
+        
+        response_text = response.choices[0].text.strip()
+        
+        engine.say(response_text)
+        engine.runAndWait()
+        
+    except sr.UnknownValueError:
+        print("Sorry, I didn't understand that.")
+    except sr.RequestError as request_error:
+        print(f"Could not request results from Google Speech Recognition service; {0}".format(request_error))
+    
+    if __name__ == '__main__':
+        while True:
+            main()
+        
