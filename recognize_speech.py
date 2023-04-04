@@ -10,11 +10,11 @@ r = sr.Recognizer()
 
 engine = pyttsx3.init()
 
-def recognize_speech():
+def recognize_speech(retry_count = 3):
     """
     Method starts here
     """
-    
+    engine.say(f"You have {0} retries left.".format(retry_count))
     # Using microphone to listen to user input
     with sr.Microphone() as source:
         audio = r.listen(source)
@@ -34,7 +34,13 @@ def recognize_speech():
             
             engine.say('Please say your query again.')
             engine.runAndWait()
-            return recognize_speech()
+            
+            if retry_count > 1:
+                return recognize_speech(retry_count=retry_count -1)
+            
+            engine.say("Sorry, you've used up all your retries.")
+            engine.runAndWait()
+            return None
         
         except sr.UnknownValueError:
             print("Sorry, I didn't understand that.")

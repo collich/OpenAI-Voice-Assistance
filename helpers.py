@@ -8,7 +8,7 @@ from googlesearch import search
 def send_email():
     pass
 
-def open_website():
+def open_website(site):
     pass
 
 def search_internet():

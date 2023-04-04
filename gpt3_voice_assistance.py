@@ -11,6 +11,7 @@ import speech_recognition as sr
 import pyttsx3
 from dotenv import load_dotenv
 from helpers import send_email, open_website, search_internet, tell_joke
+from recognize_speech import recognize_speech
 
 
 # Initialize speech recognition engine
@@ -58,7 +59,9 @@ def main():
         elif 'open website' in query:
             engine.say('Okay, so what site do you want me to search?')
             engine.runAndWait()
-            open_website()
+            site = recognize_speech()
+            if site is not None:
+                open_website(site)
         elif 'search internet' in query:
             search_internet()
         elif 'tell joke' in query:
