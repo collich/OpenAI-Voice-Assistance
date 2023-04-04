@@ -56,6 +56,8 @@ def main():
         elif 'send email' in query:
             send_email()
         elif 'open website' in query:
+            engine.say('Okay, so what site do you want me to search?')
+            engine.runAndWait()
             open_website()
         elif 'search internet' in query:
             search_internet()
