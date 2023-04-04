@@ -5,10 +5,12 @@ This module contains functions for interacting with the OpenAI API.
 
 
 import os
+import sys
 import openai
 import speech_recognition as sr
 import pyttsx3
 from dotenv import load_dotenv
+from helpers import send_email, open_website, search_internet, tell_joke
 
 
 # Initialize speech recognition engine
@@ -47,14 +49,18 @@ def main():
     try:
         query = r.recognize_google(audio)
         print(f"You said {query}")
-        if 'send email' in query:
-            pass
+        if 'goodbye luke' in query:
+            engine.say('Goodbye!')
+            engine.runAndWait()
+            sys.exit()
+        elif 'send email' in query:
+            send_email()
         elif 'open website' in query:
-            pass
+            open_website()
         elif 'search internet' in query:
-            pass
+            search_internet()
         elif 'tell joke' in query:
-            pass
+            tell_joke()
         else:
             response = openai.Completion.create(
                 model= "gpt3-turbo",
