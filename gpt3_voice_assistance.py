@@ -54,18 +54,27 @@ def main():
             engine.say('Goodbye!')
             engine.runAndWait()
             sys.exit()
+            
         elif 'send email' in query:
             send_email()
+            
         elif 'open website' in query:
             engine.say('Okay, so what site do you want me to search?')
             engine.runAndWait()
             site = recognize_speech()
             if site is not None:
                 open_website(site)
+                
         elif 'search internet' in query:
-            search_internet()
+            engine.say('What are you looking for? Please tell me in terms of search terms.')
+            engine.runAndWait()
+            search_term = recognize_speech()
+            if site is not None:
+                search_internet(search_term)
+            
         elif 'tell joke' in query:
             tell_joke()
+            
         else:
             response = openai.Completion.create(
                 model= "gpt3-turbo",
