@@ -37,7 +37,7 @@ def main():
     openai.api_key = os.getenv('OPENAI_API_KEY')
     
     # TTS will start kicking in
-    engine.say("This is luke, how may i help you right now?")
+    engine.say("This is Vocalis, how may i help you right now? Send email, Open Website, Search Internet or ChatGPT? Say now.")
     engine.runAndWait()
     
     # Use Microphone to pick up speech
@@ -47,7 +47,7 @@ def main():
     try:
         query = r.recognize_google(main_audio)
         print(f"You said {query}")
-        if 'goodbye luke' in query:
+        if 'goodbye' in query:
             engine.say('Goodbye!')
             engine.runAndWait()
             sys.exit()
@@ -101,7 +101,7 @@ def main():
 
     # Program starts here
 if __name__ == '__main__':
-    engine.say("Start by saying 'Hey Luke' or Stop the program by saying 'Bye Luke'")
+    engine.say("Start by saying 'Hello Vocalis' or Stop the program by saying 'GoodBye Vocalis'")
     engine.runAndWait()
         
         # Start audio recording using microphone
@@ -111,10 +111,10 @@ if __name__ == '__main__':
             # Try method
         try:
             command = r.recognize_google(audio)
-            if 'hey luke' in command:
+            if 'hello' in command:
                 while True:
                     main()
-            elif 'bye luke' in command:
+            elif 'goodbye' in command:
                 engine.say('GoodBye!')
                 engine.runAndWait()
                 break

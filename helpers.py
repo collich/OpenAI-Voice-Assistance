@@ -4,6 +4,7 @@ Imported Libraries
 # pylint: disable=trailing-whitespace
 
 import webbrowser
+import platform
 from googlesearch import search
 
 def send_email():
@@ -13,8 +14,11 @@ def open_website(site):
     """
     Open website for user method
     """
+    if platform.system() == "Windows":
+        return webbrowser.open(site)
+    
     browser_list = webbrowser.get()
-    if len(browser_list) > 0:
+    if browser_list:
         return webbrowser.open(site, new=2)
     
     return webbrowser.open(site, new=1)
