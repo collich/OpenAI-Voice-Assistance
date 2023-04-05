@@ -10,6 +10,15 @@ r = sr.Recognizer()
 
 engine = pyttsx3.init()
 
+def record_audio():
+    """
+    Record audio using microphone
+    """
+    with sr.Microphone() as source:
+        print('Listening...')
+        audio = r.listen(source)
+        return audio
+
 def recognize_speech(retry_count = 3):
     """
     Method starts here
@@ -22,7 +31,7 @@ def recognize_speech(retry_count = 3):
         
     try:
         query = r.recognize_google(audio)
-        engine.say(f"You've said {query}? Is that correct?")
+        engine.say(f"You've said {query}? Is that correct? Please answer yes or no")
         engine.runAndWait()
         
         with sr.Microphone() as source:

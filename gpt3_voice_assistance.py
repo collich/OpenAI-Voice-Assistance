@@ -11,8 +11,7 @@ import speech_recognition as sr
 import pyttsx3
 from dotenv import load_dotenv
 from helpers import send_email, open_website, search_internet, tell_joke
-from recognize_speech import recognize_speech
-
+from recognize_speech import record_audio, recognize_speech
 
 # Initialize speech recognition engine
 r = sr.Recognizer()
@@ -42,13 +41,11 @@ def main():
     engine.runAndWait()
     
     # Use Microphone to pick up speech
-    with sr.Microphone() as source:
-        print('Listening...')
-        audio = r.listen(source)
+    main_audio = record_audio()
         
     # Try method
     try:
-        query = r.recognize_google(audio)
+        query = r.recognize_google(main_audio)
         print(f"You said {query}")
         if 'goodbye luke' in query:
             engine.say('Goodbye!')
@@ -69,7 +66,7 @@ def main():
             engine.say('What are you looking for? Please tell me in terms of search terms.')
             engine.runAndWait()
             search_term = recognize_speech()
-            if site is not None:
+            if search_term is not None:
                 search_internet(search_term)
             
         elif 'tell joke' in query:
@@ -98,40 +95,39 @@ def main():
         print("Sorry, I didn't understand that.")
         
     # Second except error method
-    except sr.RequestError as request_error:
+    except sr.RequestError as r_error:
         print(f"Could not request results from Google Speech Recognition service; {0}"
-              .format(request_error))
+              .format(r_error))
 
     # Program starts here
-    if __name__ == '__main__':
-        engine.say("Start by saying 'Hey Luke' or Stop the program by saying 'Bye Luke'")
-        engine.runAndWait()
+if __name__ == '__main__':
+    engine.say("Start by saying 'Hey Luke' or Stop the program by saying 'Bye Luke'")
+    engine.runAndWait()
         
         # Start audio recording using microphone
-        while True:
-            with sr.Microphone() as source:
-                audio = r.listen(source)
+    while True:
+        audio = record_audio()
                 
             # Try method
-            try:
-                command = r.recognize_google(audio)
-                if 'hey luke' in command:
-                    while True:
-                        main()
-                elif 'bye luke' in command:
-                    engine.say('GoodBye!')
-                    engine.runAndWait()
-                    break
-                else:
-                    engine.say("Sorry, I didn't understand that.")
-                    engine.runAndWait()
-                    
-            # First except error method
-            except sr.UnknownValueError:
+        try:
+            command = r.recognize_google(audio)
+            if 'hey luke' in command:
+                while True:
+                    main()
+            elif 'bye luke' in command:
+                engine.say('GoodBye!')
+                engine.runAndWait()
+                break
+            else:
                 engine.say("Sorry, I didn't understand that.")
                 engine.runAndWait()
+                    
+            # First except error method
+        except sr.UnknownValueError:
+            engine.say("Sorry, I didn't understand that.")
+            engine.runAndWait()
                 
             # Second except error method
-            except sr.RequestError as request_error:
-                print(f"Could not request results from Google Speech Recognition service; {0}"
-                      .format(request_error))
+        except sr.RequestError as request_error:
+            print(f"Could not request results from Google Speech Recognition service; {0}"
+                .format(request_error))
