@@ -16,7 +16,7 @@ def record_audio():
     """
     with sr.Microphone() as source:
         print('Listening...')
-        audio = r.listen(source)
+        audio = r.listen(source, timeout=5)
         return audio
 
 def recognize_speech(retry_count = 3):
