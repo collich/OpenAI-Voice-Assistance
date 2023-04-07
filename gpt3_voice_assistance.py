@@ -3,7 +3,6 @@ This module contains functions for interacting with the OpenAI API.
 """
 # pylint: disable=trailing-whitespace
 
-
 import os
 import sys
 import openai
@@ -12,6 +11,7 @@ import pyttsx3
 from dotenv import load_dotenv
 from helpers import send_email, open_website, search_internet, tell_joke
 from recognize_speech import record_audio, recognize_speech
+from todo_list import connect_database
 
 # Initialize speech recognition engine
 r = sr.Recognizer()
@@ -35,6 +35,9 @@ def main():
     
     # Configure OpenAI API credentials
     openai.api_key = os.getenv('OPENAI_API_KEY')
+    
+    # Connect database
+    connect_database()
     
     # TTS will start kicking in
     print("This is Vocalis, how may i help you right now? Send email, Open Website, Search Internet or ChatGPT? Say now.")
@@ -79,6 +82,9 @@ def main():
                 print(joke)
                 engine.say(joke)
                 engine.runAndWait()
+                
+        elif 'to do list' in query:
+            pass
             
         else:
             response = openai.Completion.create(
