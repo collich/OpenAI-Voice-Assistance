@@ -5,6 +5,7 @@ Imported Libraries
 
 import webbrowser
 import platform
+import pyjokes
 from googlesearch import search
 
 def send_email():
@@ -34,4 +35,8 @@ def search_internet(search_term):
     search(search_term)
 
 def tell_joke():
-    pass
+    """
+    Jokes methods
+    """
+    joke = pyjokes.get_joke()
+    return joke

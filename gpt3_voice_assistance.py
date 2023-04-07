@@ -74,7 +74,11 @@ def main():
                 search_internet(search_term)
             
         elif 'tell joke' in query:
-            tell_joke()
+            joke = tell_joke()
+            if joke is not None:
+                print(joke)
+                engine.say(joke)
+                engine.runAndWait()
             
         else:
             response = openai.Completion.create(
