@@ -62,3 +62,11 @@ def update_note(Ident, title, content):
     """
     cursor.execute("UPDATE notes SET title = ?, content = ? WHERE id = ?", (title, content, Ident))
     conn.commit()
+
+def delete_note(Ident):
+    """
+    Delete entry from the table.
+    """
+    cursor.execute("DELETE FROM notes WHERE id = ?", (Ident))
+    conn.commit()
+    
