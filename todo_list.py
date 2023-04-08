@@ -5,7 +5,7 @@ CRUD methods
 import sqlite3
 import pyttsx3
 import speech_recognition as sr
-# pylint: disable=trailing-whitespace
+# pylint: disable=trailing-whitespace disable=C0103
 
 r = sr.Recognizer()
 
@@ -36,8 +36,22 @@ def connect_database():
 
 def create_note(title, content):
     """
-    Method to create a new note
+    Method to create a new note.
     """
     cursor.execute("INSERT INTO notes (title, content) VALUES (?, ?)", (title, content))
     conn.commit()
     return cursor.lastrowid
+
+def show_note(Ident):
+    """
+    Show one entry from the table.
+    """
+    cursor.execute("SELECT * FROM notes WHERE id = ?", (Ident,))
+    return cursor.fetchone()
+
+def index_note():
+    """
+    Show all entries from the table.
+    """
+    cursor.execute("SELECT * FROM notes")
+    return cursor.fetchall()
