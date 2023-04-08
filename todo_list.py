@@ -55,3 +55,10 @@ def index_note():
     """
     cursor.execute("SELECT * FROM notes")
     return cursor.fetchall()
+
+def update_note(Ident, title, content):
+    """
+    Update entry form the table.
+    """
+    cursor.execute("UPDATE notes SET title = ?, content = ? WHERE id = ?", (title, content, Ident))
+    conn.commit()
