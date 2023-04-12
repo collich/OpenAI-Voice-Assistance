@@ -140,7 +140,9 @@ def execute_tasks(task):
         created_item = create_note(title, content)
         engine.say(f"You've successfully created {created_item[1]} containing {created_item[2]}")
         engine.runAndWait()
-
+    elif "update" in task:
+        pass
+    
     # Program starts here
 if __name__ == '__main__':
     print("Start by saying 'Hello Vocalis' or Stop the program by saying 'GoodBye Vocalis'")

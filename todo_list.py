@@ -40,8 +40,8 @@ def create_note(title, content):
     """
     cursor.execute("INSERT INTO notes (title, content) VALUES (?, ?)", (title, content))
     conn.commit()
-    cursor.execute("SELECt * FROM notes WHERE id = ?", (cursor.lastrowid))
-    return cursor.fetchone()
+    item = show_note(cursor.lastrowid)
+    return item
 
 def show_note(Ident):
     """
