@@ -69,4 +69,3 @@ def delete_note(Ident):
     """
     cursor.execute("DELETE FROM notes WHERE id = ?", (Ident))
     conn.commit()
-    

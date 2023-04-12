@@ -19,16 +19,18 @@ def record_audio():
         audio = r.listen(source, timeout=5)
         return audio
 
-def recognize_speech(retry_count = 3):
+def recognize_speech(retry_count = 4):
     """
     Method starts here
     """
-    print(f"You have {retry_count} retries left.")
-    engine.say(f"You have {retry_count} retries left.")
-    engine.runAndWait()
+    
+    # Conditional to check retry counter
+    if retry_count is not 4:
+        print(f"You have {retry_count} retries left.")
+        engine.say(f"You have {retry_count} retries left.")
+        engine.runAndWait()
     # Using microphone to listen to user input
-    with sr.Microphone() as source:
-        audio = r.listen(source)
+    audio = record_audio()
         
     try:
         query = r.recognize_google(audio)
@@ -36,8 +38,7 @@ def recognize_speech(retry_count = 3):
         engine.say(f"You've said {query}? Is that correct? Please answer yes or no")
         engine.runAndWait()
         
-        with sr.Microphone() as source:
-            confirmation_audio = r.listen(source)
+        confirmation_audio = record_audio()
         
         try:
             confirmation_query = r.recognize_google(confirmation_audio)
@@ -45,11 +46,10 @@ def recognize_speech(retry_count = 3):
                 print(confirmation_query)
                 return query
             
-            print('Please say your query again.')
-            engine.say('Please say your query again.')
-            engine.runAndWait()
-            
             if retry_count > 1:
+                print('Please say your query again.')
+                engine.say('Please say your query again.')
+                engine.runAndWait()
                 return recognize_speech(retry_count=retry_count-1)
             
             print("Sorry, you've used up all your retries.")
