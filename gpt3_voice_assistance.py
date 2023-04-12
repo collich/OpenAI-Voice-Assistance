@@ -11,7 +11,7 @@ import pyttsx3
 from dotenv import load_dotenv
 from helpers import send_email, open_website, search_internet, tell_joke
 from recognize_speech import record_audio, recognize_speech
-from todo_list import connect_database
+from todo_list import connect_database, create_note
 
 # Initialize speech recognition engine
 r = sr.Recognizer()
@@ -88,6 +88,7 @@ def main():
             engine.say('Okay so what do you want to do? Create note? Read all notes? Read a single note? Delete a note?')
             engine.runAndWait()
             task = recognize_speech()
+            execute_tasks(task)
             
         else:
             response = openai.Completion.create(
@@ -120,6 +121,24 @@ def main():
               .format(r_error))
         engine.say(f"Could not request results from Google Speech Recognition service; {0}"
               .format(r_error))
+        engine.runAndWait()
+
+# Seperate method for determining todo list
+def execute_tasks(task):
+    """
+    Method to execute todo list methods
+    """
+    if "create" in task:
+        print("What's the title of the content?")
+        engine.say("What's the title of the content?")
+        engine.runAndWait()
+        title = recognize_speech()
+        print("What's the content?")
+        engine.say("What's the content?")
+        engine.runAndWait()
+        content = recognize_speech()
+        created_item = create_note(title, content)
+        engine.say(f"You've successfully created {created_item[1]} containing {created_item[2]}")
         engine.runAndWait()
 
     # Program starts here

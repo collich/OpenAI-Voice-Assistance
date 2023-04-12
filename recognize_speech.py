@@ -25,7 +25,7 @@ def recognize_speech(retry_count = 4):
     """
     
     # Conditional to check retry counter
-    if retry_count is not 4:
+    if retry_count != 4:
         print(f"You have {retry_count} retries left.")
         engine.say(f"You have {retry_count} retries left.")
         engine.runAndWait()
