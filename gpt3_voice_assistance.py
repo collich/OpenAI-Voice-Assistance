@@ -84,7 +84,10 @@ def main():
                 engine.runAndWait()
                 
         elif 'to do list' in query:
-            pass
+            print('Okay so what do you want to do? Create note? Read all notes? Read a single note? Delete a note?')
+            engine.say('Okay so what do you want to do? Create note? Read all notes? Read a single note? Delete a note?')
+            engine.runAndWait()
+            task = recognize_speech()
             
         else:
             response = openai.Completion.create(
