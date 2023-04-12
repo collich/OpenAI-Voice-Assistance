@@ -11,7 +11,7 @@ import pyttsx3
 from dotenv import load_dotenv
 from helpers import send_email, open_website, search_internet, tell_joke
 from recognize_speech import record_audio, recognize_speech
-from todo_list import connect_database, create_note
+from todo_list import connect_database, create_note, index_note
 
 # Initialize speech recognition engine
 r = sr.Recognizer()
@@ -140,8 +140,20 @@ def execute_tasks(task):
         created_item = create_note(title, content)
         engine.say(f"You've successfully created {created_item[1]} containing {created_item[2]}")
         engine.runAndWait()
-    elif "update" in task:
-        pass
+    elif "read" in task:
+        print("Okay, fetching list from the database")
+        engine.say("Okay, fetching list from the database")
+        engine.runAndWait()
+        notes = index_note()
+        if notes:
+            for index, (title, content) in enumerate(notes,  1):
+                print(f"{index}. Title: {title}. Content: {content}")
+                engine.say(f"{index}. Title: {title}. Content: {content}")
+                engine.runAndWait()
+        else:
+            print("Sorry, there isn't any task.")
+            engine.say("Sorry, there isn't any task.")
+            engine.runAndWait()
     
     # Program starts here
 if __name__ == '__main__':

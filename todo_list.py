@@ -54,7 +54,7 @@ def index_note():
     """
     Show all entries from the table.
     """
-    cursor.execute("SELECT * FROM notes")
+    cursor.execute("SELECT title, content FROM notes")
     return cursor.fetchall()
 
 def update_note(Ident, title, content):
