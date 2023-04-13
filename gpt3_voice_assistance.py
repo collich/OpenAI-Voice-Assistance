@@ -11,7 +11,7 @@ import pyttsx3
 from dotenv import load_dotenv
 from helpers import send_email, open_website, search_internet, tell_joke
 from recognize_speech import record_audio, recognize_speech
-from todo_list import connect_database, create_note, index_note, delete_note
+from todo_list import connect_database, create_note, index_note, delete_note, show_note
 
 # Initialize speech recognition engine
 r = sr.Recognizer()
@@ -140,6 +140,7 @@ def execute_tasks(task):
         created_item = create_note(title, content)
         engine.say(f"You've successfully created {created_item[1]} containing {created_item[2]}")
         engine.runAndWait()
+        
     elif "read" in task:
         print("Okay, fetching list from the database")
         engine.say("Okay, fetching list from the database")
@@ -154,8 +155,17 @@ def execute_tasks(task):
             print("Sorry, there isn't any task.")
             engine.say("Sorry, there isn't any task.")
             engine.runAndWait()
+            
     elif "update" in task:
-        pass
+        print("Which note id you want to edit?")
+        engine.say("Which note id you want to edit?")
+        engine.runAndWait()
+        index = recognize_speech()
+        single_note = show_note(index)
+        print(f"This is the item i've found, ID: {single_note[0]}, title: {single_note[1]}, content: {single_note[2]}")
+        engine.say(f"This is the item i've found, ID: {single_note[0]}, title: {single_note[1]}, content: {single_note[2]}")
+        engine.runAndWait()
+        
     elif "delete" in task:
         print("Okay so which note index do you want to delete?")
         engine.say("Okay so which note index do you want to delete?")
