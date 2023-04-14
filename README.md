@@ -15,4 +15,4 @@ SENDER_PASS = your_email_password
 Check your email. If it's outlook/hotmail, you don't have to change the code.
 If it's Gmail or Yahoo, under helpers.py file, change line 39 from "smtp.outlook.com" to to either "smtp.gmail.com" or "smtp.yahoo.com" depending on your SENDER_EMAIL
 
-Make sure to create assistant.sqlite in the data folder as well!
+Make sure to create a data file in the main directory then inside it, assistant.sqlite!
