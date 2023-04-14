@@ -74,6 +74,10 @@ def main():
             engine.runAndWait()
             email_body = recognize_speech()
             send_email(to_personel, email_subject, email_body)
+            # Confirmation from the TTS
+            print(f"Done, email sent to {to_personel}")
+            engine.say(f"Done, email sent to {to_personel}")
+            engine.runAndWait()
             
         elif 'open website' in query:
             print('Okay, so what site do you want me to search?')
@@ -105,7 +109,7 @@ def main():
             task = recognize_speech()
             execute_tasks(task)
             
-        else:
+        elif "GPT" in query:
             response = openai.Completion.create(
                 model= "gpt3-turbo",
                 prompt= query,
