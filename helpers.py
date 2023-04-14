@@ -2,13 +2,16 @@
 Imported Libraries
 """
 # pylint: disable=trailing-whitespace
-
+import smtplib
 import webbrowser
 import platform
 import pyjokes
 from googlesearch import search
 
-def send_email():
+def send_email(to, subject, body, two_FA = False):
+    """
+    Email sending method
+    """
     pass
 
 def open_website(site):

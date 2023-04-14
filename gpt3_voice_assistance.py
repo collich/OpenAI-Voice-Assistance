@@ -58,7 +58,22 @@ def main():
             sys.exit()
             
         elif 'send email' in query:
-            send_email()
+            # Ask for input to the receiver
+            print("To whom do you want send it to? Please type it in the input.")
+            engine.say("To whom do you want send it to? Please type it in the input.")
+            engine.runAndWait()
+            to_personel = input("To: ")
+            # Ask for subject from the user
+            print("What is the subject of the email?")
+            engine.say("What is the subject of the email?")
+            engine.runAndWait()
+            email_subject = recognize_speech()
+            # Ask for the body of email
+            print("What is your body of the your email message?")
+            engine.say("What is your body of the your email message?")
+            engine.runAndWait()
+            email_body = recognize_speech()
+            send_email(to_personel, email_subject, email_body)
             
         elif 'open website' in query:
             print('Okay, so what site do you want me to search?')
@@ -83,7 +98,7 @@ def main():
                 engine.say(joke)
                 engine.runAndWait()
                 
-        elif 'to do list' in query:
+        elif 'list' or 'note' in query:
             print('Okay so what do you want to do? Create note? Read all notes? Read a single note? Delete a note?')
             engine.say('Okay so what do you want to do? Create note? Read all notes? Read a single note? Delete a note?')
             engine.runAndWait()
