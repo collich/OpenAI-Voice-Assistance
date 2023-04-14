@@ -12,7 +12,7 @@ import pyjokes
 from googlesearch import search
 from dotenv import load_dotenv
 
-def send_email(to_recipient, subject, body, two_FA = False):
+def send_email(to_recipient, subject, body, two_fac = False):
     """
     Email sending method
     Check if you have 2FA enable. If you do, change two_FA at the params to True
@@ -40,7 +40,7 @@ def send_email(to_recipient, subject, body, two_FA = False):
     server.starttls()
     
     # 2FA
-    if two_FA:
+    if two_fac:
         token = input("2-Factor Authentication Token: ")
         server.login(sender_email, f"{sender_password}{token}")
     else:
